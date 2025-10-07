@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "a4600828-9c2a-4dc7-bef4-918608c40483",
+		"name": "Masterclass",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8366292"
+	},
+	"item": [
+		{
+			"name": "ConnectorCreation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"PRIME\",\r\n    \"config\": {\r\n        \"connector.class\": \"io.debezium.connector.sqlserver.SqlServerConnector\",\r\n        \"database.hostname\": \"sql1\",\r\n        \"database.port\": \"1433\",\r\n        \"database.user\": \"sa\",\r\n        \"database.password\": \"shh!SHH!\",\r\n        \"database.dbname\": \"Prime\",\r\n        \"database.names\": \"Prime\",\r\n        \"table.include.list\": \"Prime.dbo.Prime1,Prime.dbo.Prime3,Prime.dbo.Prime7,Prime.dbo.Prime9,Prime.dbo.debezium_signal\",\r\n        \"database.server.name\": \"sql1\",\r\n        \"database.history.kafka.bootstrap.servers\": \"kafka:9092\",\r\n        \"database.history.kafka.topic\": \"dbhistory_sqlserver_1\",\r\n        \"topic.prefix\": \"prime\",\r\n        \"signal.enabled.channels\": \"source\",\r\n        \"signal.data.collection\": \"Prime.dbo.debezium_signal\",\r\n        \"signal.poll.interval.ms\": 10000,\r\n        \"database.encrypt\": false,\r\n        \"schema.history.internal\": \"io.debezium.storage.file.history.FileSchemaHistory\",\r\n        \"schema.history.internal.file.filename\": \"./etc/sql1-history.json\",\r\n        \"value.converter\": \"org.apache.kafka.connect.json.JsonConverter\",\r\n        \"value.converter.schemas.enable\": \"false\",\r\n        \"key.converter\": \"org.apache.kafka.connect.json.JsonConverter\",  \r\n        \"key.converter.schemas.enable\": \"false\",\r\n        \"snapshot.mode\": \"schema_only\",\r\n        \"max.iteration.transactions\": \"500\",\r\n        \"max.batch.size\" : 50,\r\n        \"transforms\": \"route\",\r\n        \"transforms.route.type\": \"io.debezium.transforms.ByLogicalTableRouter\",\r\n        \"transforms.route.topic.regex\": \"prime\\\\.Prime\\\\.dbo\\\\.Prime\\\\d+\",\r\n        \"transforms.route.topic.replacement\": \"prime.Prime.dbo.Prime\",\r\n        \"transforms.route.key.enforce.uniqueness\": \"false\"\r\n    }\r\n} ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PRIMEStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8083/connectors/PRIME/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"PRIME",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PRIMERestart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8083/connectors/PRIME/restart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"PRIME",
+						"restart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PRIMEPause",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://kafka1:8083/connectors/PRIME/pause",
+					"protocol": "http",
+					"host": [
+						"kafka1"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"PRIME",
+						"pause"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PRIMEDelete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8083/connectors/PRIME",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"PRIME"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PRIMEAddNewTable",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"connector.class\": \"io.debezium.connector.sqlserver.SqlServerConnector\",\r\n        \"database.hostname\": \"sql1\",\r\n        \"database.port\": \"1433\",\r\n        \"database.user\": \"sa\",\r\n        \"database.password\": \"shh!SHH!\",\r\n        \"database.dbname\": \"Prime\",\r\n        \"database.names\": \"Prime\",\r\n        \"table.include.list\": \"dbo.Prime1,dbo.Prime3,dbo.Prime7,dbo.Prime9,dbo.debezium_signal\",\r\n        \"database.server.name\": \"sql1\",\r\n        \"database.history.kafka.bootstrap.servers\": \"kafka:9092\",\r\n        \"database.history.kafka.topic\": \"dbhistory_sqlserver_1\",\r\n        \"topic.prefix\": \"prime\",\r\n        \"signal.enabled.channels\": \"source\",\r\n        \"signal.data.collection\": \"Prime.dbo.debezium_signal\",\r\n        \"signal.poll.interval.ms\": 10000,\r\n        \"database.encrypt\": false,\r\n        \"schema.history.internal\": \"io.debezium.storage.file.history.FileSchemaHistory\",\r\n        \"schema.history.internal.file.filename\": \"./etc/sql1-history.json\",\r\n        \"value.converter\": \"org.apache.kafka.connect.json.JsonConverter\",\r\n        \"value.converter.schemas.enable\": \"false\",\r\n        \"key.converter\": \"org.apache.kafka.connect.json.JsonConverter\",  \r\n        \"key.converter.schemas.enable\": \"false\",\r\n        \"snapshot.mode\": \"schema_only\",\r\n        \"max.iteration.transactions\": \"500\",\r\n        \"max.batch.size\" : 50,\r\n        \"transforms\": \"route\",\r\n        \"transforms.route.type\": \"io.debezium.transforms.ByLogicalTableRouter\",\r\n        \"transforms.route.topic.regex\": \"prime\\\\.Prime\\\\.dbo\\\\.Prime\\\\d+\",\r\n        \"transforms.route.topic.replacement\": \"prime.Prime.dbo.Prime\",\r\n        \"transforms.route.key.enforce.uniqueness\": \"false\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors/PRIME/config",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"PRIME",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateMissionConnector",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"name\": \"MissionControl\",\r\n    \"config\": {\r\n        \"connector.class\": \"io.debezium.connector.sqlserver.SqlServerConnector\",\r\n        \"database.hostname\": \"sql1\",\r\n        \"database.port\": \"1433\",\r\n        \"database.user\": \"sa\",\r\n        \"database.password\": \"shh!SHH!\",\r\n        \"database.dbname\": \"Prime\",\r\n        \"database.names\": \"Prime\",\r\n        \"table.include.list\": \"dbo.Signal_SQL,dbo.Signal_CONNECT,dbo.Signal_KAFKA\",\r\n        \"database.server.name\": \"sql1\",\r\n        \"database.history.kafka.bootstrap.servers\": \"kafka:9092\",\r\n        \"database.history.kafka.topic\": \"dbhistory_sqlserver_3\",\r\n        \"topic.prefix\": \"prime\",\r\n        \"database.encrypt\": false,\r\n        \"schema.history.internal\": \"io.debezium.storage.file.history.FileSchemaHistory\",\r\n        \"schema.history.internal.file.filename\": \"./etc/sql3-history.json\",\r\n        \"value.converter\": \"org.apache.kafka.connect.json.JsonConverter\",\r\n        \"value.converter.schemas.enable\": \"false\",\r\n        \"key.converter\": \"org.apache.kafka.connect.json.JsonConverter\",  \r\n        \"key.converter.schemas.enable\": \"false\",\r\n        \"snapshot.mode\": \"schema_only\",\r\n        \"max.iteration.transactions\": \"500\",\r\n        \"max.batch.size\" : 50,\r\n        \"transforms\": \"routeAll\",\r\n        \"transforms.routeAll.type\": \"org.apache.kafka.connect.transforms.RegexRouter\",\r\n        \"transforms.routeAll.regex\": \".*\",\"transforms.routeAll.replacement\": \"MISSION_CONTROL\",\r\n        \"transforms.route.key.enforce.uniqueness\": \"false\"\r\n    }\r\n } ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateConnectorMissionControl",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"connector.class\": \"io.debezium.connector.sqlserver.SqlServerConnector\",\r\n        \"database.hostname\": \"sql1\",\r\n        \"database.port\": \"1433\",\r\n        \"database.user\": \"sa\",\r\n        \"database.password\": \"shh!SHH!\",\r\n        \"database.dbname\": \"Prime\",\r\n        \"database.names\": \"Prime\",\r\n        \"table.include.list\": \"dbo.Signal_SQL,dbo.Signal_CONNECT,dbo.Signal_KAFKA\",\r\n        \"database.server.name\": \"sql1\",\r\n        \"database.history.kafka.bootstrap.servers\": \"kafka:9092\",\r\n        \"database.history.kafka.topic\": \"dbhistory_sqlserver_3\",\r\n        \"topic.prefix\": \"prime\",\r\n        \"database.encrypt\": false,\r\n        \"schema.history.internal\": \"io.debezium.storage.file.history.FileSchemaHistory\",\r\n        \"schema.history.internal.file.filename\": \"./etc/sql3-history.json\",\r\n        \"value.converter\": \"org.apache.kafka.connect.json.JsonConverter\",\r\n        \"value.converter.schemas.enable\": \"false\",\r\n        \"key.converter\": \"org.apache.kafka.connect.json.JsonConverter\",  \r\n        \"key.converter.schemas.enable\": \"false\",\r\n        \"snapshot.mode\": \"schema_only\",\r\n        \"max.iteration.transactions\": \"500\",\r\n        \"max.batch.size\" : 50,\r\n        \"transforms\": \"routeAll\",\r\n        \"transforms.routeAll.type\": \"org.apache.kafka.connect.transforms.RegexRouter\",\r\n        \"transforms.routeAll.regex\": \".*\",\"transforms.routeAll.replacement\": \"MISSION_CONTROL\",\r\n        \"transforms.route.key.enforce.uniqueness\": \"false\"\r\n    }\r\n \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors/MissionControl/config",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"MissionControl",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConnectorUpdatePRIME",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"connector.class\": \"io.debezium.connector.sqlserver.SqlServerConnector\",\r\n        \"database.hostname\": \"sql1\",\r\n        \"database.port\": \"1433\",\r\n        \"database.user\": \"sa\",\r\n        \"database.password\": \"shh!SHH!\",\r\n        \"database.dbname\": \"Prime\",\r\n        \"database.names\": \"Prime\",\r\n        \"table.include.list\": \"dbo.Prime1,dbo.Prime3,dbo.Prime7,dbo.Prime9\",\r\n        \"database.server.name\": \"sql1\",\r\n        \"database.history.kafka.bootstrap.servers\": \"kafka:9092\",\r\n        \"database.history.kafka.topic\": \"dbhistory_sqlserver_1\",\r\n        \"topic.prefix\": \"prime\",\r\n        \"signal.enabled.channels\": \"source\",\r\n        \"signal.data.collection\": \"Prime.dbo.Prime1\",\r\n        \"database.encrypt\": false,\r\n        \"schema.history.internal\": \"io.debezium.storage.file.history.FileSchemaHistory\",\r\n        \"schema.history.internal.file.filename\": \"./etc/sql1-history.json\",\r\n        \"value.converter\": \"org.apache.kafka.connect.json.JsonConverter\",\r\n        \"value.converter.schemas.enable\": \"false\",\r\n        \"key.converter\": \"org.apache.kafka.connect.json.JsonConverter\",  \r\n        \"key.converter.schemas.enable\": \"false\",\r\n        \"snapshot.mode\": \"schema_only\",\r\n        \"max.iteration.transactions\": \"500\",\r\n        \"max.batch.size\" : 50,\r\n        \"transforms\": \"route\",\r\n        \"transforms.route.type\": \"io.debezium.transforms.ByLogicalTableRouter\",\r\n        \"transforms.route.topic.regex\": \"prime\\\\.Prime\\\\.dbo\\\\.(Prime1|Prime3|Prime7|Prime9)\",\r\n        \"transforms.route.topic.replacement\": \"prime.Prime.dbo.Prime\",\r\n        \"transforms.route.key.enforce.uniqueness\": \"false\"\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors/PRIME/config",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"PRIME",
+						"config"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MissionControlConnectorStatus",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8083/connectors/MissionControl/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"MissionControl",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mask",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
