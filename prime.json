@@ -1,0 +1,32 @@
+{
+    "name": "PRIME",
+    "config": {
+        "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+        "database.hostname": "sql1",
+        "database.port": "1433",
+        "database.user": "sa",
+        "database.password": "shh!SHH!",
+        "database.dbname": "Prime",
+        "database.names": "Prime",
+        "table.include.list": "dbo.Prime1,dbo.Prime3,dbo.Prime7,dbo.Prime9",
+        "database.server.name": "sql1",
+        "database.history.kafka.bootstrap.servers": "kafka:9092",
+        "database.history.kafka.topic": "dbhistory_sqlserver_1",
+        "topic.prefix": "prime",
+        "database.encrypt": false,
+        "schema.history.internal": "io.debezium.storage.file.history.FileSchemaHistory",
+        "schema.history.internal.file.filename": "./etc/sql1-history.json",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "false",
+        "key.converter": "org.apache.kafka.connect.json.JsonConverter",  
+        "key.converter.schemas.enable": "false",
+        "snapshot.mode": "schema_only",
+        "max.iteration.transactions": "500",
+        "max.batch.size" : 50,
+        "transforms": "route",
+        "transforms.route.type": "io.debezium.transforms.ByLogicalTableRouter",
+        "transforms.route.topic.regex": "prime\\.Prime\\.dbo\\.(Prime1|Prime3|Prime7|Prime9)",
+        "transforms.route.topic.replacement": "prime.Prime.dbo.Prime",
+        "transforms.route.key.enforce.uniqueness": "false"
+    }
+}

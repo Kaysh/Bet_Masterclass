@@ -1,0 +1,32 @@
+{
+    "name": "MissionControl",
+    "config": {
+        "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+        "database.hostname": "sql2",
+        "database.port": "1433",
+        "database.user": "sa",
+        "database.password": "shh!SHH!",
+        "database.dbname": "Signals",
+        "database.names": "Signals",
+        "table.include.list":  "dbo.Signal_SQL,dbo.Signal_CONNECT,dbo.Signal_KAFKA",
+        "database.server.name": "sql2",
+        "database.history.kafka.bootstrap.servers": "kafka:9092",
+        "database.history.kafka.topic": "dbhistory_sqlserver_3",
+        "topic.prefix": "Signals",
+        "database.encrypt": "false",
+        "schema.history.internal": "io.debezium.storage.file.history.FileSchemaHistory",
+        "schema.history.internal.file.filename": "./etc/sql3-history.json",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "false",
+        "key.converter": "org.apache.kafka.connect.json.JsonConverter", 
+        "key.converter.schemas.enable": "false",
+        "snapshot.mode": "schema_only",
+        "max.iteration.transactions": "500",
+        "max.batch.size" : "50",
+        "transforms": "routeAll",
+        "transforms.routeAll.type": "org.apache.kafka.connect.transforms.RegexRouter",
+        "transforms.routeAll.regex": ".*",
+        "transforms.routeAll.replacement": "MISSION_CONTROL",
+        "transforms.route.key.enforce.uniqueness": "false"
+        }
+    }
