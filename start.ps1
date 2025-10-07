@@ -6,9 +6,9 @@ docker compose up -d
 Write-Host "Waiting for SQL Server containers to initialize..."
 Start-Sleep -Seconds 10 
 Write-Host "Creating sql databases, tables and configuring CDC"
-docker cp "C:\Dev\Training\SQL\PrimeSQL1.sql" sql1:/tmp/Prime.sql
-docker cp "C:\Dev\Training\SQL\PrimeSQL2.sql" sql2:/tmp/Prime.sql
-docker cp "C:\Dev\Training\SQL\signals.sql" sql2:/tmp/signals.sql
+docker cp "C:\Dev\Bet_Masterclass\SQL\PrimeSQL1.sql" sql1:/tmp/Prime.sql
+docker cp "C:\Dev\Bet_Masterclass\SQL\PrimeSQL2.sql" sql2:/tmp/Prime.sql
+docker cp "C:\Dev\Bet_Masterclass\SQL\signals.sql" sql2:/tmp/signals.sql
 
 docker exec -i sql1 /opt/mssql-tools18/bin/sqlcmd `
     -S localhost -U sa -P "shh!SHH!" `
@@ -54,29 +54,30 @@ function Register-Connector {
 }
 
 
-Register-Connector -jsonPath "C:\Dev\Training\Connectors\prime.json"
+Register-Connector -jsonPath "C:\Dev\Bet_Masterclass\Connectors\prime.json"
 Start-Sleep -Seconds 3
-Register-Connector -jsonPath "C:\Dev\Training\Connectors\MissionControl.json"
+Register-Connector -jsonPath "C:\Dev\Bet_Masterclass\Connectors\MissionControl.json"
 Start-Sleep -Seconds 3
 
-#Start-Process -FilePath "python" -ArgumentList "C:\Dev\Training\PY\prime1.py"
+#Start-Process -FilePath "python" -ArgumentList "C:\Dev\Bet_Masterclass\PY\prime1.py"
 #Start-Sleep -Seconds 2 
-#Start-Process -FilePath "python" -ArgumentList "C:\Dev\Training\PY\prime3.py" 
+#Start-Process -FilePath "python" -ArgumentList "C:\Dev\Bet_Masterclass\PY\prime3.py" 
 #Start-Sleep -Seconds 2
-#Start-Process -FilePath "python" -ArgumentList "C:\Dev\Training\PY\prime7.py" 
+#Start-Process -FilePath "python" -ArgumentList "C:\Dev\Bet_Masterclass\PY\prime7.py" 
 #Start-Sleep -Seconds 2
-#Start-Process -FilePath "python" -ArgumentList "C:\Dev\Training\PY\prime9.py" 
+#Start-Process -FilePath "python" -ArgumentList "C:\Dev\Bet_Masterclass\PY\prime9.py" 
 #Write-Host "Waiting for Debezium Connector to Stabalize..."
 #Start-Sleep -Seconds 10 
-#Start-Process -FilePath "python" -ArgumentList "C:\Dev\Training\PY\sink.py" 
+#Start-Process -FilePath "python" -ArgumentList "C:\Dev\Bet_Masterclass\PY\sink.py" 
 
-Start-Process -FilePath "cmd.exe" -ArgumentList '/k python "C:\Dev\Training\PY\prime1.py"'
+Start-Process -FilePath "cmd.exe" -ArgumentList '/k python "C:\Dev\Bet_Masterclass\PY\prime1.py"'
 Start-Sleep -Seconds 2
-Start-Process -FilePath "cmd.exe" -ArgumentList '/k python "C:\Dev\Training\PY\prime3.py"'
+Start-Process -FilePath "cmd.exe" -ArgumentList '/k python "C:\Dev\Bet_Masterclass\PY\prime3.py"'
 Start-Sleep -Seconds 2
-Start-Process -FilePath "cmd.exe" -ArgumentList '/k python "C:\Dev\Training\PY\prime7.py"'
+Start-Process -FilePath "cmd.exe" -ArgumentList '/k python "C:\Dev\Bet_Masterclass\PY\prime7.py"'
 Start-Sleep -Seconds 2
-Start-Process -FilePath "cmd.exe" -ArgumentList '/k python "C:\Dev\Training\PY\prime9.py"'
+Start-Process -FilePath "cmd.exe" -ArgumentList '/k python "C:\Dev\Bet_Masterclass\PY\prime9.py"'
 Write-Host "Waiting for Debezium Connector to Stabilize..."
 Start-Sleep -Seconds 10
-Start-Process -FilePath "cmd.exe" -ArgumentList '/k python "C:\Dev\Training\PY\sink.py"'
+
+Start-Process -FilePath "cmd.exe" -ArgumentList '/k python "C:\Dev\Bet_Masterclass\PY\sink.py"'
